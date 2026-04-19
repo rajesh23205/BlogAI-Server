@@ -2,8 +2,8 @@ import Profile from "../models/Profile.js";
 
 export const createProfile = async (req, res) => {
   try {
-    const Profile = await Profile.create(req.body);
-    res.status(201).json(Profile);
+    const profile = await Profile.create(req.body);
+    res.status(201).json(profile);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

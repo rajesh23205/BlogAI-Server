@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import postRoutes from "./routes/postRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js"
 
 const app = express();
 
@@ -12,5 +13,6 @@ app.get('/', (req, res)=>{
 })
 
 app.use("/api/posts", postRoutes);
+app.use("/api/profile", profileRoutes);
 
 export default app;

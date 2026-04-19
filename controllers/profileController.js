@@ -18,11 +18,18 @@ export const createProfile = async (req, res) => {
   }
 };
 
-export const getProfile = async (req, res) => {
+// profileController.js
+
+export const getMyProfile = async (req, res) => {
   try {
-    // Added .select("-password") so hashes aren't sent in bulk requests
-    const profiles = await Profile.find().select("-password").sort({ createdAt: -1 });
-    res.json(profiles);
+    // req.user was set by the 'protect' middleware
+    const profile = await Profile.findById(req.user.id).select("-password");
+    
+    if (profile) {
+      res.json(profile);
+    } else {
+      res.status(404).json({ message: "Profile not found" });
+    }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

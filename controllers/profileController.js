@@ -4,14 +4,10 @@ import jwt from "jsonwebtoken"; // You'll need to install this: npm install json
 export const createProfile = async (req, res) => {
 
   try {
-    console.log('0');
     const profile = await Profile.create(req.body);
-    console.log('1');
     // Convert to object and remove password before sending response
     const profileResponse = profile.toObject();
-    console.log('2');
     delete profileResponse.password;
-    console.log('3');
     res.status(201).json(profileResponse);
   } catch (err) {
     res.status(500).json({ error: err.message });

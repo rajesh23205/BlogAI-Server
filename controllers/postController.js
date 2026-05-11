@@ -2,25 +2,35 @@ import Post from "../models/Post.js";
 
 export const createPost = async (req, res) => {
   try {
-    const { title, content, tags } = req.body;
+    const {
+      title,
+      introduction,
+      sections,
+      conclusion,
+      tags
+    } = req.body;
 
-    // ✅ Basic validation
-    if (!title || !content) {
+    // ✅ Validation
+    if (!title || !introduction || !sections) {
       return res.status(400).json({
-        error: "Title and content are required"
+        error: "Missing required blog fields"
       });
     }
 
     // ✅ Get user from token (VERY IMPORTANT)
     const user = req.user; // comes from auth middleware
 
+    // ✅ Create post
     const post = await Post.create({
       title,
-      content,
+      introduction,
+      sections,
+      conclusion,
       tags,
+
       author: user.id,
       authorName: user.name,
-      authorAvatar: user.avatar
+      // authorAvatar: user.avatar
     });
 
     res.status(201).json(post);
